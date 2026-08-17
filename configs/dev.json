@@ -1,9 +1,0 @@
-{
-    "id": "dev",
-    "train_size": 1000,
-    "valid_size": 100,
-    "test_size": 100,
-    "n_min_nodes": 4,
-    "n_max_nodes": 5,
-    "n_pixels": 32
-}
