@@ -4,6 +4,15 @@ COLORING is a synthetic dataset of image/graph pairs.  Each integer image is a
 Voronoi partition whose region adjacency is the target planar graph; adjacent
 regions are assigned different color IDs.
 
+- **Top row**: Input image  
+- **Bottom row**: Target graph  
+
+<p align="center">
+  <img src="Coloring_Inputs.png" width="700" alt="Coloring dataset illustration">
+</p>
+
+---
+
 Install the dependencies with `python3 -m pip install -r requirements.txt`.
 
 ## Generate a dataset
