@@ -132,8 +132,7 @@ is_same(predicted_graph, target_graph)  # color-preserving isomorphism
 ```
 
 Both metrics return `0` or `1`. `is_same` applies cheap graph invariants and a
-stable labeled 1-WL test before exact planarity and VF2 isomorphism checks. See
-[`DOC/metrics.md`](DOC/metrics.md) for the algorithms and pseudocode.
+stable labeled 1-WL test before exact planarity and VF2 isomorphism checks. 
 
 ## Canonize a graph
 
@@ -149,5 +148,24 @@ canonized_adjacency, canonized_node_colors = canonize_graph(
 The position-free WL/BFS ordering is adapted from
 [GraViti](https://github.com/RomanBresson/GraViti) by Roman Bresson. It reduces
 arbitrary node-order variance but, without geometric tie-breakers, unresolved
-symmetries fall back to input indices. See
-[`DOC/canonization.md`](DOC/canonization.md) for pseudocode and limitations.
+symmetries fall back to input indices. 
+
+## References
+
+```bibtex
+@article{krzakala2024any2graph,
+  title={Any2graph: Deep end-to-end supervised graph prediction with an optimal transport loss},
+  author={Krzakala, Paul and Yang, Junjie and Flamary, R{\'e}mi and d'Alch{\'e}-Buc, Florence and Laclau, Charlotte and Labeau, Matthieu},
+  journal={Advances in Neural Information Processing Systems},
+  volume={37},
+  pages={101552--101588},
+  year={2024}
+}
+
+@article{krzakala2025quest,
+  title={The quest for the GRAph Level autoEncoder (GRALE)},
+  author={Krzakala, Paul and Melo, Gabriel and Laclau, Charlotte and d'Alch{\'e}-Buc, Florence and Flamary, R{\'e}mi},
+  journal={arXiv preprint arXiv:2505.22109},
+  year={2025}
+}
+```
