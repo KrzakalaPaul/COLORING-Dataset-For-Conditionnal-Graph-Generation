@@ -120,3 +120,19 @@ graph, adjacency_matrix, node_positions = get_graph(sample.image)
 the adjacency matrix from shared pixel boundaries, and estimates normalized
 `(x, y)` node positions from component centers. The recovered graph equals the
 one encoded by the image up to node permutation.
+
+## Evaluate graphs
+
+```python
+from metrics import is_same, is_valid
+
+target_graph = (sample.adjacency_matrix, sample.node_colors)
+predicted_graph = (reconstructed_adjacency, reconstructed_graph.node_colors)
+
+is_valid(predicted_graph)             # planar and properly colored
+is_same(predicted_graph, target_graph)  # color-preserving isomorphism
+```
+
+Both metrics return `0` or `1`. `is_same` applies cheap graph invariants and a
+stable labeled 1-WL test before exact planarity and VF2 isomorphism checks. See
+[`DOC/metrics.md`](DOC/metrics.md) for the algorithms and pseudocode.
