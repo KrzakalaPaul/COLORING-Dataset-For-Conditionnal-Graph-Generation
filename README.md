@@ -40,6 +40,7 @@ This creates one dataset containing memory-mapped `.npy` files:
   `(n_samples, n_nodes_max)`. Entries after each sample's `n_nodes` value are
   padding and must be ignored;
 - `n_nodes.npy`: integer array of shape `(n_samples,)`.
+- `summary.json`: generation parameters and array file metadata.
 
 Color arrays use the smallest unsigned dtype that represents their color IDs
 (usually `uint8`); `n_nodes.npy` similarly uses the smallest unsigned dtype
@@ -55,9 +56,6 @@ import numpy as np
 images = np.load("data/coloring_10/images.npy", mmap_mode="r")
 image_batch = images[1_000:1_032]
 ```
-
-See [`DOC/instruction.md`](DOC/instruction.md) for the generation contract and
-planned future utilities.
 
 ## Create a WL-aware split
 

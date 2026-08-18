@@ -8,6 +8,7 @@ split-related behaviour.
 
 from __future__ import annotations
 
+import json
 from multiprocessing import Pool, cpu_count
 from pathlib import Path
 from typing import NamedTuple
@@ -228,6 +229,54 @@ def _generate_worker(
     )
 
 
+def _write_summary(
+    output_path: Path,
+    *,
+    n_samples: int,
+    n_pixels: int,
+    n_nodes_max: int,
+    n_nodes_min: int,
+    n_colors: int,
+    n_workers: int,
+    seed: int | None,
+    images: np.memmap,
+    adjacency_matrices: np.memmap,
+    node_colors: np.memmap,
+    node_counts: np.memmap,
+) -> None:
+    """Write generation parameters and stored-array metadata to JSON."""
+    arrays = {
+        "images": ("images.npy", images),
+        "adjacency_matrices": ("adjacency_matrices.npy", adjacency_matrices),
+        "node_colors": ("node_colors.npy", node_colors),
+        "n_nodes": ("n_nodes.npy", node_counts),
+    }
+    summary = {
+        "format_version": 1,
+        "generator": "COLORING",
+        "parameters": {
+            "n_samples": n_samples,
+            "n_pixels": n_pixels,
+            "n_nodes_max": n_nodes_max,
+            "n_nodes_min": n_nodes_min,
+            "n_colors": n_colors,
+            "n_workers": n_workers,
+            "seed": seed,
+        },
+        "arrays": {
+            name: {
+                "filename": filename,
+                "shape": list(array.shape),
+                "dtype": array.dtype.name,
+            }
+            for name, (filename, array) in arrays.items()
+        },
+    }
+    with (output_path / "summary.json").open("w", encoding="utf-8") as file:
+        json.dump(summary, file, indent=2, sort_keys=True)
+        file.write("\n")
+
+
 def create_coloring_dataset(
     output_directory: str | Path,
     n_samples: int,
@@ -244,8 +293,8 @@ def create_coloring_dataset(
     parameters documented in ``DOC/instruction.md``. ``seed`` optionally makes
     all sampling deterministic, including when multiprocessing is used. The
     output directory is created if needed and receives ``images.npy``,
-    ``adjacency_matrices.npy``, ``node_colors.npy``, and ``n_nodes.npy``. Existing files
-    with those names are overwritten.
+    ``adjacency_matrices.npy``, ``node_colors.npy``, ``n_nodes.npy``, and
+    ``summary.json``. Existing files with those names are overwritten.
 
     Returns
     -------
@@ -317,4 +366,18 @@ def create_coloring_dataset(
     adjacency_matrices.flush()
     node_colors.flush()
     node_counts.flush()
+    _write_summary(
+        output_path,
+        n_samples=n_samples,
+        n_pixels=n_pixels,
+        n_nodes_max=n_nodes_max,
+        n_nodes_min=n_nodes_min,
+        n_colors=n_colors,
+        n_workers=n_workers,
+        seed=seed,
+        images=images,
+        adjacency_matrices=adjacency_matrices,
+        node_colors=node_colors,
+        node_counts=node_counts,
+    )
     return images, adjacency_matrices, node_colors, node_counts
