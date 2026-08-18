@@ -1,5 +1,6 @@
 """Official implementation of the COLORING synthetic dataset."""
 
+from .canonization import canonize_graph
 from .data_generation import create_coloring_dataset
 from .dataset import ColoringDataSample, ColoringDataset
 from .metrics import (
@@ -18,6 +19,7 @@ __all__ = [
     "ColoringDataset",
     "ColoringGraph",
     "are_planar_graphs_isomorphic",
+    "canonize_graph",
     "create_coloring_dataset",
     "create_wl_split",
     "get_graph",

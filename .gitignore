@@ -1,5 +1,8 @@
 __pycache__
 .__pycache__
-DOC/
+# Keep source/reference documents local, but version documentation written for
+# the public implementation.
+DOC/*
+!DOC/canonization.md
 data/
 old/

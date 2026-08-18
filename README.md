@@ -134,3 +134,20 @@ is_same(predicted_graph, target_graph)  # color-preserving isomorphism
 Both metrics return `0` or `1`. `is_same` applies cheap graph invariants and a
 stable labeled 1-WL test before exact planarity and VF2 isomorphism checks. See
 [`DOC/metrics.md`](DOC/metrics.md) for the algorithms and pseudocode.
+
+## Canonize a graph
+
+```python
+from canonization import canonize_graph
+
+canonized_adjacency, canonized_node_colors = canonize_graph(
+    (sample.adjacency_matrix, sample.node_colors),
+    wl_iterations=3,
+)
+```
+
+The position-free WL/BFS ordering is adapted from
+[GraViti](https://github.com/RomanBresson/GraViti) by Roman Bresson. It reduces
+arbitrary node-order variance but, without geometric tie-breakers, unresolved
+symmetries fall back to input indices. See
+[`DOC/canonization.md`](DOC/canonization.md) for pseudocode and limitations.

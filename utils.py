@@ -83,8 +83,8 @@ def get_graph(
     image:
         Two-dimensional integer color-ID matrix.
     return_node_pos:
-        When true, return ``(graph, adjacency_matrix, node_positions)``.
-        Otherwise return ``(graph, adjacency_matrix)``.
+        When true, return ``(graph, node_positions)``.
+        Otherwise return ``(graph)``.
     """
     image = np.asarray(image)
     if image.ndim != 2:
@@ -101,5 +101,5 @@ def get_graph(
         adjacency_matrix=adjacency_matrix,
     )
     if return_node_pos:
-        return graph, adjacency_matrix, node_positions
-    return graph, adjacency_matrix
+        return graph, node_positions
+    return graph
